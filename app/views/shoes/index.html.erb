@@ -1,0 +1,34 @@
+<% content_for :bar do %>
+<a href="/dashboard/<%= current_user.id %>"></span>Go to Dashboard</a>
+<% end %>
+
+<h3>All Products</h3>
+<table class="table table-striped table-bordered">
+<thead>
+    <tr>
+    <th>Product</th>
+    <th>Seller</th>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Action</th>
+    </tr>
+</thead>
+<tbody>
+    <% @all_shoes.each do |shoes| %>
+    <tr>
+    <td><%= shoes.name %></td>
+    <td><%= shoes.user.first_name %> <%= shoes.user.last_name %></td>
+    <td><%= shoes.created_at.strftime("%b %d, %Y") %></td>
+    <td><%= shoes.price %></td>
+    <td>       
+        <form action="/shoes/<%= shoes.id %>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="_method" value="patch">
+            <input class="btn btn-default " type='submit' value='Buy'>
+        </form>
+     </td>
+    </tr>
+    <% end %>
+    
+</tbody>
+</table>
